@@ -1,0 +1,68 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Student {
+	int rollNumber;
+	string name;
+	float sgpa;
+};
+
+const int maxSize = 15;
+
+void acceptStudentData(Student students[maxSize]) {
+	for (int i = 0; i < maxSize; i++) {
+		cout << "\nEnter Roll Number : ";
+		cin >> students[i].rollNumber;
+
+		cout << "Enter Name : ";
+		cin >> students[i].name;
+
+		cout << "Enter SGPA : ";
+		cin >> students[i].sgpa;
+	}
+}
+
+void displayStudents(Student students[maxSize]) {
+	cout << "Roll Number \t Name \t\t SGPA \n" << endl;
+	for (int i = 0; i < maxSize; i++) {
+		cout << "  " << students[i].rollNumber << " \t\t " << students[i].name << " \t\t " << students[i].sgpa << "\n";
+	}
+}
+
+void first_ten_toppers(Student students[maxSize], int first, int last) {
+	if (first < last) {
+		int pivot = first;
+		int i = first;
+		int j = last;
+
+		while (i < j) {
+			while (students[i].sgpa >= students[pivot].sgpa && i < last) {
+				i++;
+			}
+			while (students[j].sgpa < students[pivot].sgpa) {
+				j--;
+			}
+			if (i < j) {
+				Student temp = students[i];
+				students[i] = students[j];
+				students[j] = temp;
+			}
+		}
+
+		Student temp = students[pivot];
+		students[pivot] = students[j];
+		students[j] = temp;
+
+		first_ten_toppers(students, first, j - 1);
+		first_ten_toppers(students, j + 1, last);
+	}
+}
+
+int main() {
+	Student studentData[maxSize];
+	acceptStudentData(studentData);
+	first_ten_toppers(studentData, 0, maxSize - 1);
+	cout << "\nTop Ten Toppers:\n" << endl;
+	displayStudents(studentData);
+}

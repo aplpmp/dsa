@@ -1,0 +1,109 @@
+#include <iostream>
+using namespace std;
+
+const int SIZE = 5;
+
+class Queue {
+    private: int items[SIZE];
+    int front,rear;
+
+    public: Queue() {
+        front = -1;
+        rear = -1;
+    }
+
+    bool isFull() {
+        return (front == 0 && rear == SIZE - 1) || (front == rear + 1);
+    }
+
+    bool isEmpty() {
+        return front == -1;
+    }
+
+    void enQueue(int element) {
+        if (isFull()) {
+            cout << "Queue Is Full. You Cannot Insert Element.\n";
+        } else {
+            if (front == -1) {
+                front = 0;
+            }
+            rear = (rear + 1) % SIZE;
+            items[rear] = element;
+            cout << "Inserted " << element << "\n";
+        }
+    }
+
+    int deQueue() {
+        if (isEmpty()) {
+            cout << "Queue Is Empty. You Cannot Delete Element.\n";
+            return -1;
+        } else {
+            int element = items[front];
+            if (front == rear) {
+                front = -1;
+                rear = -1;
+            } else {
+                front = (front + 1) % SIZE;
+            }
+            return element;
+        }
+    }
+
+    void display() {
+        if (isEmpty()) {
+            cout << "Queue is Empty.";
+        } else {
+            cout << "Front -> " << front << "\n";
+            cout << "Items -> ";
+            int i = front;
+            while (i != rear) {
+                cout << items[i] << " ";
+                i = (i + 1) % SIZE;
+            }
+            cout << items[i] << "\n";
+            cout << "Rear -> " << rear << "\n";
+        }
+    }
+};
+
+int main() {
+    Queue q;
+    int choice, element;
+	int removedElement;
+
+    do {
+        cout << "\nWhich Operation You Want To Perform:";
+        cout << "\n1) Insert Element in Queue\n2) Delete Element from Queue\n3) Display Queue\n4) Exit.\n";
+        cout << "\nEnter Your Choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            cout << "Enter element you want to insert: ";
+            cin >> element;
+            q.enQueue(element);
+            break;
+
+        case 2:
+        	removedElement= q.deQueue();
+            if (removedElement != -1) {
+                cout << "Removed element: " << removedElement << "\n";
+            }
+            break;
+
+        case 3:
+            cout << "Displaying elements: ";
+            q.display();
+            break;
+
+        case 4:
+            cout << "You Have Successfully Exited.";
+            break;
+
+        default:
+            cout << "Invalid choice. Please enter a valid option.";
+        }
+    } while (choice != 4);
+
+    return 0;
+}

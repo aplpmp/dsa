@@ -1,0 +1,56 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Student {
+	int rollNumber;
+	string name;
+	float sgpa;
+};
+
+const int maxSize = 15;
+
+void acceptStudentData(Student students[maxSize]) {
+	for (int i = 0; i < maxSize; i++) {
+		cout << "\nEnter Roll Number : ";
+		cin >> students[i].rollNumber;
+
+		cout << "Enter Name : ";
+		cin >> students[i].name;
+
+		cout << "Enter SGPA : ";
+		cin >> students[i].sgpa;
+	}
+}
+
+void displayStudents(Student students[maxSize]) {
+	cout << "Roll Number \t Name \t\t SGPA \n" << endl;
+	for (int i = 0; i < maxSize; i++) {
+		cout << "  " << students[i].rollNumber << " \t\t " << students[i].name << " \t\t " << students[i].sgpa << "\n";
+	}
+}
+
+void searchBySGPA(Student students[maxSize]) {
+	float sgpa;
+	cout << "\nEnter SGPA to search for: ";
+	cin >> sgpa;
+
+	cout << "\nStudents with SGPA " << sgpa << ":\n";
+	cout << "Roll Number \t Name \t\t SGPA \n" << endl;
+	int flag = 1;
+	for (int i = 0; i < maxSize; i++) {
+		if (sgpa == students[i].sgpa) {
+			cout << "  " << students[i].rollNumber << " \t\t " << students[i].name << " \t\t " << students[i].sgpa << endl;
+			flag = 0;
+		}
+	}
+	if (flag == 1) {
+		cout << "No students found with SGPA " << sgpa << endl;
+	}
+}
+
+int main() {
+	Student studentData[maxSize];
+	acceptStudentData(studentData);
+	searchBySGPA(studentData);
+}

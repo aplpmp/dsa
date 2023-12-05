@@ -1,0 +1,93 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+  int data;
+  Node * link;
+};
+
+Node * top = NULL;
+
+bool isEmpty() {
+  return top == NULL;
+}
+
+void push(int val) {
+  Node * ptr = new Node();
+  ptr -> data = val;
+  ptr -> link = top;
+  top = ptr;
+}
+
+void pop() {
+  if (isEmpty()) {
+    cout << "Stack is Empty\n";
+  } else {
+    Node * ptr = top;
+    top = top -> link;
+    delete ptr;
+  }
+}
+
+void showTop() {
+  if (isEmpty()) {
+    cout << "Stack is Empty\n";
+  } else {
+    cout << "Element at top is: " << top -> data;
+  }
+}
+
+void display() {
+  if (isEmpty()) {
+    cout << "Stack is Empty\n";
+  } else {
+    Node * temp = top;
+    while (temp != NULL) {
+      cout << "Stack Elements are : " << temp -> data << " ";
+      temp = temp -> link;
+    }
+  }
+}
+
+int main() {
+
+  int choice, val;
+
+  do {
+    cout << "\nStack Operations\n";
+    cout << "------------------------------------\n\n";
+    cout << "1) Push Value in Stack\n";
+    cout << "2) Pop Value from Stack\n";
+    cout << "3) Top Value from Stack\n";
+    cout << "4) Display Stack\n";
+    cout << "5) Exit\n\n";
+
+    cout << "Enter Choice : ";
+    cin >> choice;
+
+    switch (choice) {
+    case 1:
+      cout << "\nEnter Value to be Pushed : ";
+      cin >> val;
+      push(val);
+      break;
+    case 2:
+      pop();
+      break;
+    case 3:
+      showTop();
+      break;
+    case 4:
+      display();
+      break;
+    case 5:
+      cout << "Exited Successfully...";
+      break;
+    default:
+      cout << "Invalid Choice!!!\n";
+      break;
+    }
+  } while (choice != 5);
+
+  return 0;
+}
